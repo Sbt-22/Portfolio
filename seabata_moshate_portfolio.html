@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seabata Moshate — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #F9F6F0;
+    --ink: #1A1714;
+    --ink-muted: #6B6560;
+    --accent: #C9521F;
+    --accent-light: #F5EAE3;
+    --border: rgba(26,23,20,0.12);
+    --card-bg: #FFFFFF;
+    --section-bg: #F4F1EC;
+    --serif: 'Playfair Display', Georgia, serif;
+    --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  body { font-family: var(--sans); background: var(--cream); color: var(--ink); font-size: 16px; line-height: 1.7; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(249,246,240,0.94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.875rem; color: var(--ink-muted); text-decoration: none; font-weight: 500; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--accent); }
+  .nav-cta { background: var(--ink); color: var(--cream); border: none; padding: 0.5rem 1.25rem; border-radius: 2rem; font-family: var(--sans); font-size: 0.875rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; }
+  .nav-cta:hover { background: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: grid; grid-template-columns: 1fr 1fr; align-items: center;
+    padding: 8rem 2.5rem 4rem;
+    gap: 4rem; max-width: 1100px; margin: 0 auto;
+  }
+  .hero-eyebrow { font-size: 0.8rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 1rem; }
+  .hero-title { font-family: var(--serif); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.15; font-weight: 700; margin-bottom: 1.5rem; }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-desc { color: var(--ink-muted); font-size: 1.05rem; max-width: 480px; margin-bottom: 2.5rem; }
+  .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+  .btn-primary { background: var(--ink); color: var(--cream); border: none; padding: 0.75rem 1.75rem; border-radius: 2rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: background 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-primary:hover { background: var(--accent); }
+  .btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); padding: 0.75rem 1.75rem; border-radius: 2rem; font-family: var(--sans); font-size: 0.9rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: border-color 0.2s, color 0.2s; display: inline-flex; align-items: center; gap: 0.5rem; }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+  .hero-visual {
+    background: var(--section-bg); border-radius: 2rem;
+    aspect-ratio: 3/4; max-height: 500px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 1px solid var(--border); position: relative; overflow: hidden;
+  }
+  .hero-avatar { width: 120px; height: 120px; border-radius: 50%; background: var(--accent-light); border: 3px solid var(--accent); display: flex; align-items: center; justify-content: center; font-family: var(--serif); font-size: 2rem; color: var(--accent); font-weight: 700; margin-bottom: 1.5rem; }
+  .hero-name-card { text-align: center; padding: 0 1.5rem; }
+  .hero-name-card h2 { font-family: var(--serif); font-size: 1.3rem; font-weight: 700; margin-bottom: 0.25rem; }
+  .hero-name-card p { font-size: 0.85rem; color: var(--ink-muted); margin-bottom: 1.25rem; }
+  .hero-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.4rem; }
+  .hero-tag { background: white; border: 1px solid var(--border); border-radius: 2rem; padding: 0.3rem 0.85rem; font-size: 0.75rem; font-weight: 500; color: var(--ink-muted); }
+
+  /* SECTIONS */
+  section { padding: 5rem 2.5rem; }
+  .container { max-width: 1100px; margin: 0 auto; }
+  .section-label { font-size: 0.75rem; font-weight: 500; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 0.5rem; }
+  .section-title { font-family: var(--serif); font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 700; margin-bottom: 1rem; }
+  .section-desc { color: var(--ink-muted); max-width: 560px; margin-bottom: 3rem; }
+
+  /* ABOUT */
+  .about { background: var(--section-bg); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .about-text p { color: var(--ink-muted); margin-bottom: 1rem; }
+  .stat-row { display: flex; gap: 2.5rem; margin-top: 2rem; }
+  .stat-num { font-family: var(--serif); font-size: 2rem; font-weight: 700; color: var(--accent); }
+  .stat-label { font-size: 0.8rem; color: var(--ink-muted); }
+  .value-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 0.75rem; padding: 1.25rem; display: flex; gap: 1rem; align-items: flex-start; margin-bottom: 1rem; }
+  .value-icon { width: 36px; height: 36px; border-radius: 0.5rem; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .value-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+
+  /* SKILLS */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.5rem; }
+  .skill-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 1.5rem; transition: transform 0.2s, box-shadow 0.2s; }
+  .skill-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,23,20,0.08); }
+  .skill-icon { width: 44px; height: 44px; border-radius: 0.75rem; background: var(--accent-light); display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; }
+  .skill-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .skill-name { font-weight: 500; margin-bottom: 0.5rem; }
+  .skill-desc { font-size: 0.875rem; color: var(--ink-muted); }
+  .skill-bar { height: 4px; background: var(--section-bg); border-radius: 2px; margin-top: 1rem; overflow: hidden; }
+  .skill-fill { height: 100%; background: var(--accent); border-radius: 2px; }
+
+  /* EXPERIENCE */
+  .experience { background: var(--section-bg); }
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before { content: ''; position: absolute; left: 0; top: 8px; bottom: 8px; width: 2px; background: var(--border); }
+  .timeline-item { position: relative; margin-bottom: 2.5rem; }
+  .timeline-item::before { content: ''; position: absolute; left: -2.35rem; top: 8px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid var(--cream); }
+  .timeline-date { font-size: 0.75rem; font-weight: 500; color: var(--accent); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 0.35rem; }
+  .timeline-role { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; }
+  .timeline-company { font-size: 0.9rem; color: var(--ink-muted); margin-bottom: 0.5rem; }
+  .timeline-desc { font-size: 0.875rem; color: var(--ink-muted); }
+
+  /* PROJECTS */
+  .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; }
+  .project-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1.25rem; overflow: hidden; transition: transform 0.2s, box-shadow 0.2s; }
+  .project-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(26,23,20,0.1); }
+  .project-thumb { aspect-ratio: 16/9; background: var(--section-bg); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; border-bottom: 1px solid var(--border); }
+  .project-body { padding: 1.25rem; }
+  .project-tag { display: inline-block; background: var(--accent-light); color: var(--accent); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 0.2rem 0.6rem; border-radius: 1rem; margin-bottom: 0.75rem; }
+  .project-title { font-family: var(--serif); font-size: 1.1rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .project-desc { font-size: 0.875rem; color: var(--ink-muted); margin-bottom: 1rem; }
+  .tech-pills { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tech-pill { background: var(--section-bg); color: var(--ink-muted); font-size: 0.7rem; font-weight: 500; padding: 0.2rem 0.6rem; border-radius: 1rem; border: 1px solid var(--border); }
+
+  /* CERTIFICATIONS */
+  .certs { background: var(--section-bg); }
+  .certs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; }
+  .cert-card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 1rem; padding: 1.25rem; display: flex; flex-direction: column; gap: 0.5rem; transition: transform 0.2s; }
+  .cert-card:hover { transform: translateY(-3px); }
+  .cert-issuer { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); }
+  .cert-name { font-weight: 500; font-size: 0.9rem; }
+  .cert-date { font-size: 0.75rem; color: var(--ink-muted); }
+
+  /* CV */
+  .cv-section { text-align: center; }
+  .cv-box { display: inline-flex; flex-direction: column; align-items: center; gap: 1.5rem; background: var(--card-bg); border: 1px solid var(--border); border-radius: 1.5rem; padding: 3rem 4rem; max-width: 480px; width: 100%; }
+  .cv-icon { width: 64px; height: 64px; border-radius: 1rem; background: var(--accent-light); display: flex; align-items: center; justify-content: center; }
+  .cv-icon svg { width: 32px; height: 32px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .cv-title { font-family: var(--serif); font-size: 1.25rem; font-weight: 700; }
+  .cv-desc { font-size: 0.875rem; color: var(--ink-muted); text-align: center; }
+  .upload-zone { width: 100%; border: 2px dashed var(--border); border-radius: 0.75rem; padding: 1.5rem; text-align: center; cursor: pointer; transition: border-color 0.2s; font-size: 0.875rem; color: var(--ink-muted); }
+  .upload-zone:hover { border-color: var(--accent); color: var(--accent); }
+  input[type="file"] { display: none; }
+
+  /* CONTACT */
+  .contact { background: var(--section-bg); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+  .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-label { font-size: 0.8rem; font-weight: 500; color: var(--ink-muted); }
+  .form-input, .form-textarea { border: 1px solid var(--border); border-radius: 0.5rem; padding: 0.65rem 0.9rem; font-family: var(--sans); font-size: 0.9rem; color: var(--ink); background: var(--card-bg); outline: none; transition: border-color 0.2s; }
+  .form-input:focus, .form-textarea:focus { border-color: var(--accent); }
+  .form-textarea { resize: vertical; min-height: 120px; }
+  .contact-info { display: flex; flex-direction: column; gap: 1.5rem; }
+  .contact-item { display: flex; align-items: flex-start; gap: 1rem; }
+  .contact-item-icon { width: 40px; height: 40px; border-radius: 0.75rem; background: var(--accent-light); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .contact-item-icon svg { width: 18px; height: 18px; stroke: var(--accent); fill: none; stroke-width: 1.5; }
+  .contact-item-label { font-size: 0.75rem; font-weight: 500; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+  .contact-item-value { font-size: 0.9rem; font-weight: 500; }
+
+  /* FOOTER */
+  footer { padding: 2rem 2.5rem; text-align: center; font-size: 0.8rem; color: var(--ink-muted); border-top: 1px solid var(--border); }
+
+  /* TOAST */
+  #toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); background: var(--ink); color: var(--cream); padding: 0.75rem 1.5rem; border-radius: 2rem; font-size: 0.875rem; opacity: 0; transition: all 0.3s; pointer-events: none; z-index: 300; white-space: nowrap; }
+
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; padding-top: 6rem; }
+    .hero-visual { display: none; }
+    .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 2rem; }
+    .form-row { grid-template-columns: 1fr; }
+    nav { padding: 1rem 1.25rem; }
+    .nav-links { display: none; }
+    section { padding: 3rem 1.25rem; }
+  }
+
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .hero-eyebrow { animation: fadeUp 0.6s ease 0.1s both; }
+  .hero-title { animation: fadeUp 0.6s ease 0.2s both; }
+  .hero-desc { animation: fadeUp 0.6s ease 0.3s both; }
+  .hero-actions { animation: fadeUp 0.6s ease 0.4s both; }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">SM.</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#certifications">Certifications</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire me</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div>
+    <p class="hero-eyebrow">Available for opportunities</p>
+    <h1 class="hero-title">Hi, I'm <em>Seabata</em> — developer, analyst & educator.</h1>
+    <p class="hero-desc">BSc Computer Science & Statistics graduate from the National University of Lesotho. I build web systems, analyse data, and help others grow through technology.</p>
+    <div class="hero-actions">
+      <a href="#projects" class="btn-primary">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3h18M3 9h18M3 15h12M3 21h8"/></svg>
+        View my work
+      </a>
+      <a href="#cv" class="btn-outline">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download CV
+      </a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-avatar">SM</div>
+    <div class="hero-name-card">
+      <h2>Seabata Moshate</h2>
+      <p>Web Developer · Data Analyst · Teacher</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Python</span>
+        <span class="hero-tag">Machine Learning</span>
+        <span class="hero-tag">Web Dev</span>
+        <span class="hero-tag">Data Analysis</span>
+        <span class="hero-tag">Robotics</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text">
+        <p class="section-label">About me</p>
+        <h2 class="section-title">A bit about who I am</h2>
+        <p>I'm Seabata Moshate, a Computer Science and Statistics graduate from the National University of Lesotho, based in Maseru. I have a passion for solving real-world problems through technology — from building web systems to applying machine learning in data science.</p>
+        <p>Currently I work as a web developer at Technify LS and as a Computer Science & ICT teacher and Robotics facilitator at Soofia International School, where I inspire the next generation of tech innovators. I believe in continuous learning, having completed programmes with ALX Africa, Cisco, AWS, and Alison.</p>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-num">4+</div><div class="stat-label">Projects built</div></div>
+          <div class="stat"><div class="stat-num">3+</div><div class="stat-label">Years exp.</div></div>
+          <div class="stat"><div class="stat-num">6</div><div class="stat-label">Certifications</div></div>
+        </div>
+      </div>
+      <div>
+        <p class="section-label" style="margin-bottom:1.5rem;">My values</p>
+        <div class="value-card">
+          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+          <div><div style="font-weight:500;margin-bottom:0.25rem;">Quality & integrity</div><div style="font-size:0.875rem;color:var(--ink-muted);">I believe in doing things right the first time, every time.</div></div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <div><div style="font-weight:500;margin-bottom:0.25rem;">Lifelong learning</div><div style="font-size:0.875rem;color:var(--ink-muted);">Every project, course, and challenge is an opportunity to grow.</div></div>
+        </div>
+        <div class="value-card">
+          <div class="value-icon"><svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 7a4 4 0 100 8 4 4 0 000-8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg></div>
+          <div><div style="font-weight:500;margin-bottom:0.25rem;">People first</div><div style="font-size:0.875rem;color:var(--ink-muted);">Technology should serve people — I build with empathy at the core.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <p class="section-label">What I do</p>
+    <h2 class="section-title">Skills & tools</h2>
+    <p class="section-desc">A snapshot of the technologies, tools, and competencies I bring to every project.</p>
+    <div class="skills-grid">
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></div>
+        <div class="skill-name">Programming</div>
+        <div class="skill-desc">Python, Java, C++ — from scripting to full applications.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:85%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+        <div class="skill-name">Web development</div>
+        <div class="skill-desc">Building websites and systems delivering convenience and simplicity.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:80%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
+        <div class="skill-name">Data analysis</div>
+        <div class="skill-desc">R Studio, SPSS, MySQL, Excel — turning raw data into insights.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:90%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 00-1-1.73l-7-4a2 2 0 00-2 0l-7 4A2 2 0 003 8v8a2 2 0 001 1.73l7 4a2 2 0 002 0l7-4A2 2 0 0021 16z"/></svg></div>
+        <div class="skill-name">Machine learning</div>
+        <div class="skill-desc">Random Forest, Classification, Regression Analysis using Python.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:78%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg></div>
+        <div class="skill-name">Databases</div>
+        <div class="skill-desc">MySQL, distributed systems, Docker — reliable and scalable storage.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:75%"></div></div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 010 20M12 2a15.3 15.3 0 000 20"/></svg></div>
+        <div class="skill-name">Networking & cybersecurity</div>
+        <div class="skill-desc">Cloud fundamentals (AWS), cybersecurity awareness, network analysis.</div>
+        <div class="skill-bar"><div class="skill-fill" style="width:70%"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="experience" id="experience">
+  <div class="container">
+    <p class="section-label">Work history</p>
+    <h2 class="section-title">Experience</h2>
+    <p class="section-desc">A journey across freelancing, web development, teaching, and robotics facilitation.</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;">
+      <div>
+        <h3 style="font-family:var(--serif);font-size:1.1rem;margin-bottom:1.5rem;">Professional</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">March 2025 – Present</div>
+            <div class="timeline-role">Web Developer</div>
+            <div class="timeline-company">Technify LS</div>
+            <div class="timeline-desc">Developing websites and systems for customers, delivering convenience and simplicity through clean, functional code.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">March 2025 – Present</div>
+            <div class="timeline-role">Computer Science & ICT Teacher</div>
+            <div class="timeline-company">Soofia International School</div>
+            <div class="timeline-desc">Teaching CS and ICT — preparing lesson plans, delivering assessments, and facilitating a Robotics Club where students program with MakeCode and Python.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">January 2025 – Present</div>
+            <div class="timeline-role">Robotics Facilitator</div>
+            <div class="timeline-company">Soofia International School</div>
+            <div class="timeline-desc">Coaching students using novice bots, Arduino apprentice cars and VEX robots, sparking creativity and problem-solving skills.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">July 2023 – October 2023</div>
+            <div class="timeline-role">Freelancer</div>
+            <div class="timeline-company">Livingston Research</div>
+            <div class="timeline-desc">Completed assignments across Statistics, Programming, Maths and essay writing for clients globally, applying APA, MLA and Harvard referencing.</div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-family:var(--serif);font-size:1.1rem;margin-bottom:1.5rem;">Education</h3>
+        <div class="timeline">
+          <div class="timeline-item">
+            <div class="timeline-date">2020 – 2024</div>
+            <div class="timeline-role">BSc Computer Science & Statistics</div>
+            <div class="timeline-company">National University of Lesotho</div>
+            <div class="timeline-desc">Graduated with a Bachelor of Science, confirmed by Senate on 24 June 2024. Studied programming, databases, networks, statistical methods and machine learning.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2025</div>
+            <div class="timeline-role">Data Analytics (6-month programme)</div>
+            <div class="timeline-company">ALX Africa</div>
+            <div class="timeline-desc">Professional development in data analytics and digital age skills, completed December 2025.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2024</div>
+            <div class="timeline-role">Professional Foundations</div>
+            <div class="timeline-company">ALX Africa</div>
+            <div class="timeline-desc">Completed professional development skills for the Digital Age.</div>
+          </div>
+          <div class="timeline-item">
+            <div class="timeline-date">2017</div>
+            <div class="timeline-role">Cambridge IGCSE</div>
+            <div class="timeline-company">Soofia English Medium School</div>
+            <div class="timeline-desc">8 subjects including Computer Science, Mathematics, Biology and Chemistry.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">My work</p>
+    <h2 class="section-title">Featured projects</h2>
+    <p class="section-desc">Real projects built during my degree and beyond — each one a unique engineering and data challenge.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-thumb">🗄️</div>
+        <div class="project-body">
+          <span class="project-tag">Systems</span>
+          <h3 class="project-title">Nts'oekhe database management system</h3>
+          <p class="project-desc">A distributed database management system built to ensure reliability, usability and integrity — inspired by Postgres architecture.</p>
+          <div class="tech-pills">
+            <span class="tech-pill">Docker</span>
+            <span class="tech-pill">Distributed Systems</span>
+            <span class="tech-pill">Database Design</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🚗</div>
+        <div class="project-body">
+          <span class="project-tag">Web App</span>
+          <h3 class="project-title">Car rental system</h3>
+          <p class="project-desc">A full car rental application for booking cars, checking availability, and tracking application status online.</p>
+          <div class="tech-pills">
+            <span class="tech-pill">Java</span>
+            <span class="tech-pill">CSS</span>
+            <span class="tech-pill">Web Development</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">📉</div>
+        <div class="project-body">
+          <span class="project-tag">Data Science</span>
+          <h3 class="project-title">Customer churn rate predictor</h3>
+          <p class="project-desc">Predicts which customers are likely to churn based on behavioural characteristics using Python and regression analysis.</p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Regression Analysis</span>
+            <span class="tech-pill">Data Science</span>
+          </div>
+        </div>
+      </div>
+      <div class="project-card">
+        <div class="project-thumb">🏦</div>
+        <div class="project-body">
+          <span class="project-tag">Machine Learning</span>
+          <h3 class="project-title">Loan automation system</h3>
+          <p class="project-desc">Analyses bank data to automate loan approval decisions using a Random Forest classification algorithm.</p>
+          <div class="tech-pills">
+            <span class="tech-pill">Python</span>
+            <span class="tech-pill">Random Forest</span>
+            <span class="tech-pill">Machine Learning</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section class="certs" id="certifications">
+  <div class="container">
+    <p class="section-label">Credentials</p>
+    <h2 class="section-title">Certifications & badges</h2>
+    <p class="section-desc">Verified credentials earned through continuous professional development across cloud, data, and agile disciplines.</p>
+    <div class="certs-grid">
+      <div class="cert-card">
+        <div class="cert-issuer">ALX Africa</div>
+        <div class="cert-name">Data Analytics (6-month programme)</div>
+        <div class="cert-date">December 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">ALX Africa</div>
+        <div class="cert-name">Professional Foundations</div>
+        <div class="cert-date">August 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">AWS (Amazon Web Services)</div>
+        <div class="cert-name">AWS Educate — Getting Started with Networking</div>
+        <div class="cert-date">December 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">AWS (Amazon Web Services)</div>
+        <div class="cert-name">AWS Educate — Introduction to Cloud Computing 101</div>
+        <div class="cert-date">December 2025</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Cisco Networking Academy</div>
+        <div class="cert-name">Introduction to Cybersecurity</div>
+        <div class="cert-date">September 2024</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Cisco Networking Academy</div>
+        <div class="cert-name">Introduction to Data Science</div>
+        <div class="cert-date">September 2024</div>
+      </div>
+      <div class="cert-card">
+        <div class="cert-issuer">Alison (CPD Certified)</div>
+        <div class="cert-name">Scrum Master Training</div>
+        <div class="cert-date">September 2024</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CV UPLOAD -->
+<section id="cv">
+  <div class="container cv-section">
+    <p class="section-label">Resume</p>
+    <h2 class="section-title" style="text-align:center;">Curriculum Vitae</h2>
+    <p class="section-desc" style="margin:0 auto 2rem;text-align:center;">Download Seabata's CV or upload an updated version.</p>
+    <div class="cv-box">
+      <div class="cv-icon">
+        <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+      </div>
+      <div>
+        <div class="cv-title" id="cvTitle">Seabata_Moshate_CV.pdf</div>
+        <div class="cv-desc" id="cvDesc">BSc Computer Science & Statistics · National University of Lesotho</div>
+      </div>
+      <label class="upload-zone" id="cvUploadZone">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:block;margin:0 auto 0.5rem;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M17 8l-5-5-5 5M12 3v12"/></svg>
+        Click to upload your CV (PDF, DOC, DOCX)
+        <input type="file" id="cvInput" accept=".pdf,.doc,.docx" onchange="handleCVUpload(event)">
+      </label>
+      <a href="#" class="btn-primary" id="cvDownloadBtn" style="display:none;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>
+        Download CV
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div>
+        <p class="section-label">Get in touch</p>
+        <h2 class="section-title">Let's work together</h2>
+        <p class="section-desc">Have a project in mind, a teaching opportunity, or just want to connect? I'd love to hear from you.</p>
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Email</div>
+              <div class="contact-item-value">SbtMoshate2296@gmail.com</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.64A2 2 0 012 .18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Phone</div>
+              <div class="contact-item-value">+266 63075045</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Location</div>
+              <div class="contact-item-value">Ha Ts'osane, Maseru, Lesotho</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-item-icon">
+              <svg viewBox="0 0 24 24"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+            </div>
+            <div>
+              <div class="contact-item-label">Credly badges</div>
+              <div class="contact-item-value">credly.com/users/seabata-moshate</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="contact-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">First name</label>
+              <input type="text" class="form-input" placeholder="John">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Last name</label>
+              <input type="text" class="form-input" placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-input" placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Subject</label>
+            <input type="text" class="form-input" placeholder="What's this about?">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-textarea" placeholder="Tell me about your project or opportunity..."></textarea>
+          </div>
+          <button class="btn-primary" style="align-self:flex-start;" onclick="showToast('Message sent! Seabata will be in touch soon.')">Send message →</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Seabata Moshate · Computer Scientist & Data Analyst · Maseru, Lesotho · <span id="year"></span></p>
+</footer>
+
+<div id="toast"></div>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  function handleCVUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+    document.getElementById('cvTitle').textContent = file.name;
+    document.getElementById('cvDesc').textContent = (file.size / 1024).toFixed(0) + ' KB · Ready to download';
+    document.getElementById('cvUploadZone').style.display = 'none';
+    const btn = document.getElementById('cvDownloadBtn');
+    btn.style.display = 'inline-flex';
+    btn.href = URL.createObjectURL(file);
+    btn.download = file.name;
+    showToast('CV uploaded successfully!');
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.opacity = '1';
+    t.style.transform = 'translateX(-50%) translateY(0)';
+    setTimeout(() => {
+      t.style.opacity = '0';
+      t.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2800);
+  }
+
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const id = a.getAttribute('href').slice(1);
+      const el = document.getElementById(id);
+      if (el) { e.preventDefault(); el.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+</script>
+</body>
+</html>
